@@ -1,0 +1,237 @@
+﻿@model List<Criminal>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criminal Cards</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Add custom CSS for card styling -->
+    <style>
+        .card {
+            border-radius: 10px;
+            transition: transform 0.2s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a light shadow */
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
+        }
+
+        .card-img-top {
+            max-height: 200px;
+            object-fit: cover;
+        }
+
+        .container-outline {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-top: 20px;
+            font-family: Arial, sans-serif; /* Change the font to a professional one */
+        }
+
+        /* Style for the right column */
+        .right-column {
+            background-color: #f7f7f7;
+            border-left: 1px solid #ddd;
+            padding: 15px;
+        }
+
+        /* Style for the dropdowns */
+        .dropdown-container {
+            margin-bottom: 10px;
+        }
+
+        /* Style for card titles */
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Style for card text */
+        .card-text {
+            font-size: 1rem;
+            
+        }
+    </style>
+    <script>
+    // JavaScript code for handling the submit button click
+    $(document).ready(function () {
+        $("#submitButton").click(function () {
+            // Get the selected values from the dropdowns
+            var sex = $("#sexDropdown").val();
+            var hair = $("#hairDropdown").val();
+            var eyeColor = $("#eyeColorDropdown").val();
+            var height = $("#heightDropdown").val();
+            var build = $("#buildDropdown").val();
+            var fingerprint = $("#fingerprintDropdown").val();
+            var glasses = $("#glassesDropdown").val();
+
+            // Do something with the selected values, e.g., send them to the server via AJAX
+            // You can customize this part according to your requirements
+            // Example:
+            $.ajax({
+                type: "POST",
+                url: "/Criminals/Filter", // Replace with your server-side endpoint
+                data: {
+                    sex: sex,
+                    hair: hair,
+                    eyeColor: eyeColor,
+                    height: height,
+                    build: build,
+                    fingerprint: fingerprint,
+                    glasses: glasses
+                },
+                success: function (data) {
+                    // Handle the response from the server, e.g., update the criminal cards
+                    // You may need to implement this part based on your application's needs
+                }
+            });
+        });
+    });
+</script>
+</head>
+
+<body>
+    @functions {
+    private string GetRandomImageFileName(string sex)
+    {
+        Random random = new Random();
+        int randomIndex = random.Next(1, sex == "Male" ? 14 : 13);
+        return $"{sex.ToLower()}{randomIndex}.png";
+    }
+}
+
+<div class="container container-outline">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="row">
+                @foreach (var criminal in Model)
+                {
+                    <div class="col-md-4">
+                        <div class="card mb-3">
+                            <img src="~/Images/@GetRandomImageFileName(criminal.Sex)" class="card-img-top" alt="Criminal Image">
+                            <div class="card-body">
+                                <h5 class="card-title"> @criminal.Name</h5>
+                                <p class="card-text">Sex: @criminal.Sex</p>
+                                <p class="card-text">Hair Color: @criminal.Hair</p>
+                                <p class="card-text">Eye Color: @criminal.Eyes</p>
+                                <p class="card-text">Height: @criminal.Height</p>
+                                <p class="card-text">Build: @criminal.Build</p>
+                                <p class="card-text">Fingerprint: @criminal.Finger_Print</p>
+                                <p class="card-text">Wears Glasses: @criminal.Glasses</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-md-3 right-column">
+
+    <form method="post" asp-controller="Home" asp-action="SubmitFilter">
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" class="form-control" placeholder="Enter Name">
+    </div>
+
+    <div class="form-group">
+        <label for="sexDropdown">Sex:</label>
+        <select id="sexDropdown" name="sex" class="form-control">
+            <!-- Dropdown options -->
+            <option value="">All</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="hairDropdown">Hair Color:</label>
+        <select id="hairDropdown" name="hair" class="form-control">
+            <!-- Dropdown options -->
+            <option value="">All</option>
+            <option value="Black">Black</option>
+            <option value="Brown">Brown</option>
+            <option value="Red">Red</option>
+            <option value="Blonde">Blonde</option>
+            <option value="Grey">Grey</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="eyeColorDropdown">Eye Color:</label>
+        <select id="eyeColorDropdown" name="eyes" class="form-control">
+            <!-- Dropdown options -->
+            <option value="">All</option>
+            <option value="Blue">Blue</option>
+            <option value="Brown">Brown</option>
+            <option value="Green">Green</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="heightDropdown">Height:</label>
+        <select id="heightDropdown" name="height" class="form-control">
+            <!-- Dropdown options -->
+            <option value="">All</option>
+            <option value="Tall">Tall</option>
+            <option value="Short">Short</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="buildDropdown">Build:</label>
+        <select id="buildDropdown" name="build" class="form-control">
+            <!-- Dropdown options -->
+            <option value="">All</option>
+            <option value="Thin">Thin</option>
+            <option value="Medium">Medium</option>
+            <option value="Wide">Wide</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="fingerprintDropdown">Fingerprint:</label>
+        <select id="fingerprintDropdown" name="fingerPrint" class="form-control">
+            <!-- Dropdown options -->
+            <option value="">All</option>
+            <option value="Loops">Loops</option>
+            <option value="Arches">Arches</option>
+            <option value="Whorls">Whorls</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="glassesDropdown">Wears Glasses:</label>
+        <select id="glassesDropdown" name="glasses" class="form-control">
+            <!-- Dropdown options -->
+            <option value="">All</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-primary">Find the Culprit!</button>
+        </div>
+    </div>
+</form>
+
+ 
+    
+    </div>
+</div>
+
+<!-- Include Bootstrap JS and Popper.js -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
