@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
+using Serilog.Events;
 
 public class Startup
 {
@@ -13,12 +15,20 @@ public class Startup
     public Startup(IConfiguration configuration)
     {
         Configuration = configuration;
+
+        Log.Logger = new LoggerConfiguration()
+            .ReadFrom.Configuration(Configuration)
+            .CreateLogger();
     }
 
-    public void ConfigureServices(IServiceCollection services)
+    public void ConfigureServices(IServiceCollection services, IWebHostEnvironment env, ILoggerFactory loggerFactory)
     {
         // ...
         services.AddScoped<ICriminalInterface, criminalDao>();
+        services.AddControllersWithViews();
+
+        // Add Serilog services
+        loggerFactory.AddSerilog();
 
 
 
