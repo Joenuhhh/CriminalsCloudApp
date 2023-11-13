@@ -16,13 +16,14 @@ namespace CriminalsCloudApp.Controllers
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-           
+            _logger.LogDebug(1, "Nlog injected into Home Controller");
 
         }
 
         public IActionResult Index()
 
         {
+            _logger.LogInformation("This is the index of our homepage");
             criminalDao criminalDao = new criminalDao();
             List<Criminal> criminals = criminalDao.GetAllCriminals();
        
@@ -32,6 +33,7 @@ namespace CriminalsCloudApp.Controllers
 
         public IActionResult SubmitFilter(string name, string sex, string hair, string eyes, string height, string build, string fingerPrint, string glasses)
         {
+            _logger.LogInformation("Searching criminals with specific attibutes");
             criminalDao criminalDao = new criminalDao();
             // Call the SelectByAttributes method with the selected values
             List<Criminal> filteredCriminals = criminalDao.SelectByAttributes(name, sex, hair, eyes, height, build, fingerPrint, glasses);
