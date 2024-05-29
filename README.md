@@ -1,4 +1,4 @@
-![image](https://github.com/Joenuhhh/CriminalsCloudApp/assets/79020295/90bec929-7f40-4d9b-87f3-82df249c74e0)
+
 <!DOCTYPE html>
 <html>
 <head>
