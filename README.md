@@ -10,7 +10,7 @@
 <h1>SQL Query Demonstration Application</h1>
 
 <h2>Introduction:</h2>
-<p>Welcome to the SQL Query Demonstration Application README. This ASP.NET MVC application is designed to showcase SQL queries and search functionality for accessing databases and displaying information. The application utilizes a SQL database hosted on Azure, containing a demonstration dataset provided in a previous database class. The dataset has been enhanced with facial recognition technology to add faces to names, providing a more engaging and visually appealing demonstration of SQL query results.</p>
+<p>Welcome to the SQL Query Demonstration Application README. This ASP.NET MVC application is designed to showcase SQL queries and search functionality for accessing databases and displaying information. The application utilizes a SQL database hosted on Azure, containing a demonstration dataset provided in a previous database class. The dataset has been enhanced to add faces to names, providing a more engaging and visually appealing demonstration of SQL query results for future GCU students.</p>
 
 <h2>Features:</h2>
 <ol>
